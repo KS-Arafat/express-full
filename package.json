@@ -4,16 +4,19 @@
   "type": "module",
   "scripts": {
     "start": "bun run index.ts --bun",
-    "watch": "bun --hot index.ts --bun"
+    "watch": "bun --hot index.ts --bun",
+    "postinstall": "prisma migrate dev -n dev"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/express": "^4.17.21"
+    "@types/express": "^4.17.21",
+    "prisma": "^5.14.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@prisma/client": "^5.14.0",
     "express": "^4.19.2"
   }
 }
