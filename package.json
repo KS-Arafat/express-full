@@ -5,7 +5,8 @@
   "scripts": {
     "start": "bun run index.ts --bun",
     "watch": "bun --hot index.ts --bun",
-    "postinstall": "prisma migrate dev -n dev"
+    "postinstall": "prisma migrate dev -n dev",
+    "prisma:show": "prisma studio"
   },
   "devDependencies": {
     "@types/bun": "latest",
