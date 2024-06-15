@@ -1,22 +1,26 @@
 import express from "express";
-import path from "path";
+import cors from "cors";
+import route_home from "./routes/home";
+import route_signin from "./routes/signin";
+
+import type { CorsOptions } from "cors";
+import route_signup from "./routes/signup";
 
 const app = express();
 const PORT = 3000;
-const rootPath = __dirname;
 
-// app.use("/", express.static(path.join(rootPath, "static/home.html")));
+const corsOption: CorsOptions = {
+	methods: ["get", "post"],
+	origin: ["http://localhost:3000"],
+	credentials: true,
+	preflightContinue: false,
+	optionsSuccessStatus: 204,
+};
 
-app.get("/", (req, res) => {
-	res.sendFile(path.join(rootPath, "static/home.html"));
-});
+app.use(cors(corsOption));
 
-app.get("/signin", (req, res) => {
-	res.sendFile(path.join(rootPath, "static/signin.html"));
-});
-
-app.get("/signup", (req, res) => {
-	res.sendFile(path.join(rootPath, "static/signup.html"));
-});
+app.use("/", route_home);
+app.use("/", route_signin);
+app.use("/", route_signup);
 
 app.listen(PORT, () => console.log("Server Running on Port 3000"));
