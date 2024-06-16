@@ -1,4 +1,4 @@
-import { type ScryptOptions, scryptSync } from "crypto";
+import { type ScryptOptions, scryptSync, timingSafeEqual } from "crypto";
 
 const scryptOpt: ScryptOptions = {
 	N: 16384,
@@ -32,4 +32,19 @@ const scrypt_regeneration = (pwd: string, salt: string) => {
 	return { hash: hashBuffer.toString("hex"), salt, hashBuffer: hashBuffer };
 };
 
-export { scrypt_generation, scrypt_regeneration };
+const scrypt_verify = ({
+	pwd,
+	hash,
+	salt,
+}: {
+	pwd: string;
+	hash: string;
+	salt: string;
+}) => {
+	const hs = scrypt_regeneration(pwd, salt);
+	const transToBuffer = Buffer.from;
+	if (timingSafeEqual(transToBuffer(hs.hash), transToBuffer(hash))) return true;
+	return false;
+};
+
+export { scrypt_generation, scrypt_regeneration, scrypt_verify };
