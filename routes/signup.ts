@@ -30,12 +30,10 @@ route_signup.get("/signup", (req, res) => {
 route_signup.post("/signup", async (req, res) => {
 	// console.log(req.body);
 	const result = schema_signup.safeParse(req.body);
-	if (!result.success) res.status(400).send(result.error.issues);
+	if (!result.success) return res.status(400).send(result.error.issues);
 	const data = result.data;
-	if (data == undefined) {
-		res.sendStatus(400);
-		return;
-	}
+	if (data == undefined) return res.sendStatus(400);
+
 	const { salt, hash } = scrypt_generation(data.u_pwd);
 
 	try {
